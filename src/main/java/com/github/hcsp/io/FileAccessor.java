@@ -27,7 +27,7 @@ public class FileAccessor {
         List<String> lines = new ArrayList();
         String line = null;
         FileInputStream is= new FileInputStream(file);
-        InputStreamReader reader = new InputStreamReader(is,"GBK");
+        InputStreamReader reader = new InputStreamReader(is, "GBK");
         BufferedReader br = new BufferedReader(reader);
         while ((line = br.readLine()) != null) {
             lines.add(line);
