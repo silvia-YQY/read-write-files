@@ -3,30 +3,24 @@ package com.github.hcsp.io;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class FileAccessor {
     public static List<String> readFile1(File file) throws IOException {
-        List<String> lines = FileUtils.readLines(file, "UTF-8");
-        return lines;
+        return FileUtils.readLines(file, "UTF-8");
     }
 
     public static List<String> readFile2(File file) throws IOException {
-        List<String> lines = new ArrayList();
-        FileInputStream fileInputStream = new FileInputStream(file);
-        byte[] buf = new byte[1024];  // 数据中转站，临时缓冲区
-        int length = 0;
-        while ((length = fileInputStream.read(buf)) != -1){
-            lines.add(new String(buf, 0, length));
-            System.out.println(new String(buf, 0, length));
-        }
-        //最后记得，关闭流
-        fileInputStream.close();
-        System.out.println(lines);
-        return lines;
+        Path path = file.toPath();
+        Stream<String> ss = Files.lines(path);
+        Object[] objects = ss.toArray();
+        String[] stringArray = Arrays.copyOf(objects, objects.length, String[].class);
+        return Arrays.asList(stringArray);
     }
 
     public static List<String> readFile3(File file) throws IOException {
